@@ -6,6 +6,10 @@
             <div id="welcome">
                 <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
             </div>
+            <ul>
+                <li><a href="{{ path('admin_product_index') }}" >Product List</a></li>
+                <li><a href="{{ path('admin_product-category_index') }}">Category List</a> </li>
+            </ul>
 
             <div id="status">
                 <p>

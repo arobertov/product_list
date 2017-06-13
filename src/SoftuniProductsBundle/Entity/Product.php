@@ -2,7 +2,9 @@
 
 namespace SoftuniProductsBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use SoftuniProductsBundle\Entity\ProductCategory;
 
 /**
  * Product
@@ -83,6 +85,12 @@ class Product
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="SoftuniProductsBundle\Entity\ProductCategory",inversedBy="products")
+     * @ORM\JoinTable(name="product_category")
+     */
+    private $categories;
 
 
     /**
@@ -310,5 +318,45 @@ class Product
     {
         return $this->updatedAt;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
+    /**
+     * Add category
+     *
+     * @param ProductCategory $category
+     *
+     * @return Product
+     */
+    public function addCategory(ProductCategory $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param ProductCategory $category
+     */
+    public function removeCategory(ProductCategory $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+}
