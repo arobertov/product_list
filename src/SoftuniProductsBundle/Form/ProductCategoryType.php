@@ -3,6 +3,8 @@
 namespace SoftuniProductsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,8 +19,10 @@ class ProductCategoryType extends AbstractType
             ->add('slug')
             ->add('title')
             ->add('description')
-            ->add('image')
-            ->add('rank');
+            ->add('image',FileType::class,array(
+                'required'=>false
+            ))
+            ->add('rank',IntegerType::class);
     }
     
     /**

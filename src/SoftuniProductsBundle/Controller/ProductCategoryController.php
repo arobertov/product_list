@@ -5,8 +5,10 @@ namespace SoftuniProductsBundle\Controller;
 use SoftuniProductsBundle\Entity\ProductCategory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Productcategory controller.
  *
@@ -45,6 +47,8 @@ class ProductCategoryController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $productCategory->setCreatedAt(new \DateTime());
+            $productCategory->setUpdatedAt(new \DateTime());
             $em->persist($productCategory);
             $em->flush();
 
@@ -86,6 +90,7 @@ class ProductCategoryController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $productCategory->setUpdatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_product-category_edit', array('id' => $productCategory->getId()));

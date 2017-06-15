@@ -4,13 +4,14 @@ namespace SoftuniProductsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use SoftuniProductsBundle\Entity\ProductCategory;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
  *
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="SoftuniProductsBundle\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
@@ -25,28 +26,53 @@ class Product
 
     /**
      * @var string
-     *
+     *  @Assert\NotBlank(
+     *      message = "Name cannot be blank"
+     * )
+     * @Assert\Length(
+     *      min = "3",
+     *      minMessage = "Name is too short"
+     * )
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(
+     *      message = "Name cannot be blank"
+     * )
+     * @Assert\Length(
+     *      min = "3",
+     *      minMessage = "Name is too short"
+     * )
+     * 
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(
+     *      message = "Name cannot be blank"
+     * )
+     * @Assert\Length(
+     *      min = "3",
+     *      minMessage = "Name is too short"
+     * )
      * @ORM\Column(name="subtitle", type="string", length=255)
      */
     private $subtitle;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(
+     *      message = "Name cannot be blank"
+     * )
+     * @Assert\Length(
+     *      min = "3",
+     *      minMessage = "Name is too short"
+     * )
      * @ORM\Column(name="description", type="text")
      */
     private $description;
@@ -54,13 +80,15 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255,nullable=true)
      */
-    private $image;
+    private $path;
 
     /**
      * @var string
-     *
+     *  @Assert\NotBlank(
+     *      message = "Name cannot be blank"
+     * )
      * @ORM\Column(name="price", type="decimal", precision=8, scale=2)
      */
     private $price;
@@ -202,13 +230,13 @@ class Product
     /**
      * Set image
      *
-     * @param string $image
+     * @param string $path
      *
      * @return Product
      */
-    public function setImage($image)
+    public function setPath($path)
     {
-        $this->image = $image;
+        $this->path = $path;
 
         return $this;
     }
@@ -218,9 +246,9 @@ class Product
      *
      * @return string
      */
-    public function getImage()
+    public function getPath()
     {
-        return $this->image;
+        return $this->path;
     }
 
     /**
@@ -359,4 +387,5 @@ class Product
     {
         return $this->categories;
     }
+
 }

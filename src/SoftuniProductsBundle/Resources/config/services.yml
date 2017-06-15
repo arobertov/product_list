@@ -1,4 +1,19 @@
 services:
-#    softuni_products.example:
-#        class: SoftuniProductsBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    softuni_products.uploader:
+        class: SoftuniProductsBundle\Services\FileUploader
+        arguments: ["%softuni_product_upload%"]
+    softuni_category.uploader:
+        class: SoftuniProductsBundle\Services\FileUploader
+        arguments: ["%softuni_category_upload%"]
+    app.doctrine_products_listener:
+            class: SoftuniProductsBundle\EventListener\ImageUploadListener
+            arguments: ['@softuni_products.uploader']
+            tags:
+                - { name: doctrine.event_listener, event: prePersist }
+                - { name: doctrine.event_listener, event: preUpdate }
+    app.doctrine_category_listener:
+                class: SoftuniProductsBundle\EventListener\ImageUploadListener
+                arguments: ['@softuni_category.uploader']
+                tags:
+                    - { name: doctrine.event_listener, event: prePersist }
+                    - { name: doctrine.event_listener, event: preUpdate }

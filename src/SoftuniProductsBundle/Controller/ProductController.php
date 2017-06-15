@@ -5,7 +5,9 @@ namespace SoftuniProductsBundle\Controller;
 use SoftuniProductsBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Product controller.
@@ -45,6 +47,11 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            // $file = $product->getPath();
+            //$fileName= $this->get('softuni_products.uploader')->upload($file);
+            //$product->setPath($fileName);
+            $product->setCreatedAt(new \DateTime());
+            $product->setUpdatedAt(new \DateTime());
             $em->persist($product);
             $em->flush();
 
@@ -84,11 +91,13 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($product);
         $editForm = $this->createForm('SoftuniProductsBundle\Form\ProductType', $product);
         $editForm->handleRequest($request);
+        dump($product->getPath());
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $product->setUpdatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_product_edit', array('id' => $product->getId()));
+            return $this->redirectToRoute('admin_product_show', array('id' => $product->getId()));
         }
 
         return $this->render('@SoftuniProducts/product/edit.html.twig', array(
@@ -110,6 +119,7 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->get('softuni_products.uploader')->removeFile($product->getPath());
             $em = $this->getDoctrine()->getManager();
             $em->remove($product);
             $em->flush();
