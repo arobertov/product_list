@@ -47,9 +47,9 @@ class ProductCategory
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255)
      */
-    private $image;
+    private $path;
 
     /**
      * @var int
@@ -159,30 +159,6 @@ class ProductCategory
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return ProductCategory
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
     }
 
     /**
@@ -301,5 +277,21 @@ class ProductCategory
     public function  __toString()
     {
         return $this->title ;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setPath(string $path)
+    {
+        $this->path = $path;
     }
 }

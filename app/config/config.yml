@@ -8,7 +8,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    softuni_product_upload: '%kernel.root_dir%/../web/uploads/product/'
+    softuni_product_upload:  '%kernel.root_dir%/../web/uploads/product/'
     softuni_category_upload: '%kernel.root_dir%/../web/uploads/product-category/'
 
 
@@ -42,7 +42,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-
+    form_themes:
+      - 'bootstrap_3_horizontal_layout.html.twig'
 # Doctrine Configuration
 doctrine:
     dbal:

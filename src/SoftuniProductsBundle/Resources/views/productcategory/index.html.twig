@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include '@SoftuniProducts/topnav.html.twig' %}
     <h1>Productcategories list</h1>
 
     <table>
@@ -24,7 +25,7 @@
                 <td>{{ productCategory.slug }}</td>
                 <td>{{ productCategory.title }}</td>
                 <td>{{ productCategory.description }}</td>
-                <td><img src="{{ asset('uploads/product-category/' ~ productCategory.image) }}"></td>
+                <td><img src="{{ asset('uploads/product-category/' ~ productCategory.path) }}"></td>
                 <td>{{ productCategory.rank }}</td>
                 <td>{% if productCategory.createdAt %}{{ productCategory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if productCategory.updatedAt %}{{ productCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>

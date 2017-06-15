@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include '@SoftuniProducts/topnav.html.twig' %}
     <h1>Productcategory</h1>
 
     <table>
@@ -23,7 +24,7 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td><img src="{{ asset('uploads/product-category/'~productCategory.image) }}"></td>
+                <td><img src="{{ asset('uploads/product-category/'~productCategory.path) }}"></td>
             </tr>
             <tr>
                 <th>Rank</th>

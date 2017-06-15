@@ -1,19 +1,35 @@
 services:
+    softuni_product.manager:
+        class: SoftuniProductsBundle\Services\ProductManager
+        arguments:
+            entityManager: "@doctrine.orm.entity_manager"
+            class: 'SoftuniProductsBundle\Entity\Product'
+            container: "@service_container"
+
+    softuni_product_category.manager:
+        class: SoftuniProductsBundle\Services\ProductCategoryManager
+        arguments:
+             entityManager: "@doctrine.orm.entity_manager"
+             class: 'SoftuniProductsBundle\Entity\ProductCategory'
+             container: "@service_container"
+
     softuni_products.uploader:
         class: SoftuniProductsBundle\Services\FileUploader
         arguments: ["%softuni_product_upload%"]
+
     softuni_category.uploader:
         class: SoftuniProductsBundle\Services\FileUploader
         arguments: ["%softuni_category_upload%"]
-    app.doctrine_products_listener:
-            class: SoftuniProductsBundle\EventListener\ImageUploadListener
-            arguments: ['@softuni_products.uploader']
-            tags:
-                - { name: doctrine.event_listener, event: prePersist }
-                - { name: doctrine.event_listener, event: preUpdate }
+
     app.doctrine_category_listener:
-                class: SoftuniProductsBundle\EventListener\ImageUploadListener
-                arguments: ['@softuni_category.uploader']
-                tags:
-                    - { name: doctrine.event_listener, event: prePersist }
-                    - { name: doctrine.event_listener, event: preUpdate }
+        class: SoftuniProductsBundle\EventListener\CategoryUploadListener
+        arguments: ['@softuni_category.uploader']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+    app.doctrine_products_listener:
+        class: SoftuniProductsBundle\EventListener\ImageUploadListener
+        arguments: ['@softuni_products.uploader']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }

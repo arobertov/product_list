@@ -1,4 +1,63 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Lato',sans-serif;
+}
+nav {
+    background: cornsilk;
+    text-align: right;
+    color: #333333;
+}
+nav ul li {
+    display: inline-block;
+    padding: 15px 10px;
+    margin: 20px 10px;
+    font-size: 1.1rem;
+}
+nav li:hover{
+    background: lawngreen;
+    color: #EEEEEE;
+}
+nav a {
+    text-decoration: none;
+}
 img {
     width:  85px;
     border: 1px solid #333333;
+}
+nav h1 {
+    display: inline-block;
+    float: left;
+    padding: 30px;
+    color: #868686;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+}
+
+form {
+    margin: 20px 40px;
+    width: 300px;
+    padding:25px ;
+    background: lemonchiffon;
+}
+article {
+    margin: 10px 30px;
+    background: lemonchiffon;
+}
+article ul li {
+    list-style-type: none;
+    display: inline-block;
+}
+article h1,h2,h3,p,a{
+    margin: 2px 20px;
+    padding:5px 20px;
+}
+article img {
+    float:left;
+    width: 150px;
+    border:none;
+    margin-right: 10px;
 }

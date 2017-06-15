@@ -6,9 +6,7 @@ use SoftuniProductsBundle\Entity\ProductCategory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Productcategory controller.
  *
@@ -24,9 +22,7 @@ class ProductCategoryController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $productCategories = $em->getRepository('SoftuniProductsBundle:ProductCategory')->findAll();
+        $productCategories = $this->get('softuni_product_category.manager')->getProductCategories();
 
         return $this->render('@SoftuniProducts/productcategory/index.html.twig', array(
             'productCategories' => $productCategories,
@@ -41,7 +37,7 @@ class ProductCategoryController extends Controller
      */
     public function newAction(Request $request)
     {
-        $productCategory = new Productcategory();
+        $productCategory = $this->get('softuni_product_category.manager')->createProductCategory();
         $form = $this->createForm('SoftuniProductsBundle\Form\ProductCategoryType', $productCategory);
         $form->handleRequest($request);
 
@@ -93,7 +89,7 @@ class ProductCategoryController extends Controller
             $productCategory->setUpdatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_product-category_edit', array('id' => $productCategory->getId()));
+            return $this->redirectToRoute('admin_product-category_show', array('id' => $productCategory->getId()));
         }
 
         return $this->render('@SoftuniProducts/productcategory/edit.html.twig', array(
@@ -115,9 +111,8 @@ class ProductCategoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($productCategory);
-            $em->flush();
+            $this->get('softuni_products.uploader')->removeFile($productCategory->getPath());
+            $this->get('softuni_product_category.manager')->deleteProductCategory($productCategory);
         }
 
         return $this->redirectToRoute('admin_product-category_index');

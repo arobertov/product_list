@@ -24,10 +24,7 @@ class ProductController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $products = $em->getRepository('SoftuniProductsBundle:Product')->findAll();
-
+        $products = $this->get('softuni_product.manager')->getProducts();
         return $this->render('@SoftuniProducts/product/index.html.twig', array(
             'products' => $products,
         ));
@@ -41,15 +38,12 @@ class ProductController extends Controller
      */
     public function newAction(Request $request)
     {
-        $product = new Product();
+        $product = $this->get('softuni_product.manager')->createProduct();
         $form = $this->createForm('SoftuniProductsBundle\Form\ProductType', $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            // $file = $product->getPath();
-            //$fileName= $this->get('softuni_products.uploader')->upload($file);
-            //$product->setPath($fileName);
             $product->setCreatedAt(new \DateTime());
             $product->setUpdatedAt(new \DateTime());
             $em->persist($product);
@@ -91,7 +85,6 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($product);
         $editForm = $this->createForm('SoftuniProductsBundle\Form\ProductType', $product);
         $editForm->handleRequest($request);
-        dump($product->getPath());
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $product->setUpdatedAt(new \DateTime());
@@ -120,9 +113,7 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->get('softuni_products.uploader')->removeFile($product->getPath());
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($product);
-            $em->flush();
+            $this->get('softuni_product.manager')->deleteProduct($product);
         }
 
         return $this->redirectToRoute('admin_product_index');

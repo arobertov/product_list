@@ -1,55 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    {% include '@SoftuniProducts/topnav.html.twig' %}
     <h1>Products list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Slug</th>
-                <th>Title</th>
-                <th>Subtitle</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Price</th>
-                <th>Rank</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td><a href="{{ path('admin_product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                <td>{{ product.slug }}</td>
-                <td>{{ product.title }}</td>
-                <td>{{ product.subtitle }}</td>
-                <td>{{ product.description }}</td>
-                <td><img src="{{asset('uploads/product/' ~  product.path) }}"></td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.rank }}</td>
-                <td>{% if product.createdAt %}{{ product.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('admin_product_show', { 'id': product.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('admin_product_edit', { 'id': product.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
     <ul>
         <li>
             <a href="{{ path('admin_product_new') }}">Create a new product</a>
         </li>
     </ul>
+    <article>
+    <ul div="article">
+        {% for product in products %}
+            <li><img src="{{asset('uploads/product/' ~  product.path) }}"></li>
+            <li><h2>Title: {{ product.title }}</h2></li>
+            <li><h3>Subtitle: {{ product.subtitle }}</h3></li>
+            <li><p>Slug: {{ product.slug }}</p></li>
+            <li><p>Description: {{ product.description }}</p></li>
+            <li><p>Prise: {{ product.price }} $</p></li>
+            <li><p>Date: {% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</p></li>
+        {% endfor %}
+    </ul>
+    </article>
 {% endblock %}

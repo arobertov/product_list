@@ -3,20 +3,20 @@
  * Created by PhpStorm.
  * User: Angel
  * Date: 15.6.2017 г.
- * Time: 0:19
+ * Time: 14:36
  */
 
 namespace SoftuniProductsBundle\EventListener;
 
 
-use SoftuniProductsBundle\Entity\Product;
-use SoftuniProductsBundle\Services\FileUploader;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use SoftuniProductsBundle\Entity\ProductCategory;
+use SoftuniProductsBundle\Services\FileUploader;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ImageUploadListener
+class CategoryUploadListener
 {
     private $uploader;
 
@@ -36,11 +36,11 @@ class ImageUploadListener
     public function preUpdate(PreUpdateEventArgs $args)
     {
         if($args->getNewValue('path')===null) {
-          $args->setNewValue('path',$args->getOldValue('path'));
+            $args->setNewValue('path',$args->getOldValue('path'));
         }
         else {
             if($args->getOldValue('path')!==null)
-            $this->uploader->removeFile($args->getOldValue('path'));
+                $this->uploader->removeFile($args->getOldValue('path'));
             $entity = $args->getEntity();
             $this->uploadFile($entity);
         }
@@ -49,7 +49,7 @@ class ImageUploadListener
     private function uploadFile($entity)
     {
         // upload only works for Product entities
-        if (!$entity instanceof Product) {
+        if (!$entity instanceof ProductCategory) {
             return;
         }
 
@@ -66,7 +66,7 @@ class ImageUploadListener
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (!$entity instanceof Product) {
+        if (!$entity instanceof ProductCategory) {
             return;
         }
 
@@ -74,5 +74,4 @@ class ImageUploadListener
             $entity->setPath(new File($this->uploader->getTargetDir().'/'.$fileName));
         }
     }
-
 }

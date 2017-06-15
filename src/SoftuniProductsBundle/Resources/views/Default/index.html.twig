@@ -1,6 +1,5 @@
+{% extends 'base.html.twig' %}
 
-<ul>
-    <li><a href="{{ path('admin_product_index') }}" >Product List</a></li>
-    <li><a href="{{ path('admin_product-category_index') }}">Category List</a> </li>
-</ul>
-
+{% block body %}
+    {% include '@SoftuniProducts/topnav.html.twig' %}
+{% endblock %}
