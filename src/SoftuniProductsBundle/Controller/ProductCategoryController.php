@@ -23,7 +23,8 @@ class ProductCategoryController extends Controller
      */
     public function indexAction()
     {
-        $productCategories = $this->get('softuni_product_category.manager')->getProductCategories();
+        $criteria = ['rank'=>'DESC'];
+        $productCategories = $this->get('softuni_product_category.manager')->getProductCategoriesBy($criteria);
 
         return $this->render('@SoftuniProducts/productcategory/index.html.twig', array(
             'productCategories' => $productCategories,
@@ -136,4 +137,5 @@ class ProductCategoryController extends Controller
             ->getForm()
         ;
     }
+    
 }

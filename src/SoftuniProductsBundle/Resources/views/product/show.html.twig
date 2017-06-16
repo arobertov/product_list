@@ -8,9 +8,16 @@
             <div class="row">
                 <div class="col-sm-4 col-lg-4 col-md-4">
                     <div class="thumbnail">
-                        <img src="{{asset('uploads/product/' ~  product.path) }}" alt="">
+                        <a href="{{ path('admin_product_show',{'id':product.id}) }}">
+                            <img src="{{asset('uploads/product/' ~  product.path) }}" alt="">
+                        </a>
                         <div class="caption">
                             <h4 class="pull-right">${{ product.price }}</h4>
+                            <h4>Categories:
+                                {% for categori in product.categories  %}
+                                    <span>{{ categori.title }} ;</span>
+                                 {% endfor %}
+                            </h4>
                             <h4><a href="{{ path('admin_product_show',{'id':product.id}) }}">
                                     Title :{{ product.title }}</a>
                             </h4>

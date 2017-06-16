@@ -35,13 +35,16 @@ class CategoryUploadListener
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
+        $entity = $args->getEntity();
+        if (!$entity instanceof ProductCategory) {
+            return;
+        }
         if($args->getNewValue('image') === null) {
             $args->setNewValue('image',$args->getOldValue('image'));
         }
         else {
             if($args->getOldValue('image')!==null)
                 $this->uploader->removeFile($args->getOldValue('image'));
-            $entity = $args->getEntity();
             $this->uploadFile($entity);
         }
     }

@@ -15,6 +15,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 class ImageUploadListener
 {
@@ -67,6 +68,6 @@ class ImageUploadListener
         $entity->setPath($fileName);
     }
 
-    
+
 
 }

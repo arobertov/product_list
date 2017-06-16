@@ -3,6 +3,7 @@
 namespace SoftuniProductsBundle\Controller;
 
 use SoftuniProductsBundle\Entity\Product;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,7 +25,8 @@ class ProductController extends Controller
      */
     public function indexAction()
     {
-        $products = $this->get('softuni_product.manager')->getProducts();
+        $criteria = ['id'=>'DESC'];
+        $products = $this->get('softuni_product.manager')->getProductsBy($criteria);
         return $this->render('@SoftuniProducts/product/index.html.twig', array(
             'products' => $products,
         ));
@@ -43,6 +45,7 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->get('softuni_change_note.manager')->notifyOfSiteUpdate();
             $em = $this->getDoctrine()->getManager();
             $product->setCreatedAt(new \DateTime());
             $product->setUpdatedAt(new \DateTime());
@@ -143,4 +146,5 @@ class ProductController extends Controller
             '@SoftuniProducts/product/popular_product.html.twig',['popularProducts'=>$popularProducts]
         );
     }
+
 }

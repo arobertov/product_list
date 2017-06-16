@@ -9,12 +9,6 @@
     </ul>
   <div class="container">
       <div class="row">
-          <div class="col-md-3">
-              <p class="lead">Most popular product</p>
-                  {{ render(controller(
-                  'SoftuniProductsBundle:Product:mostPopular'
-                  )) }}
-              </div>
           <div class="col-md-9">
               <div class="row">
                 {% for product in products %}
@@ -44,5 +38,12 @@
             {% endfor %}
           </div>
       </div>
+          <div class="col-md-3">
+              <p class="lead">Most popular product</p>
+              {{ render(controller(
+              'SoftuniProductsBundle:Product:mostPopular'
+              )) }}
+          </div>
+    </div>
   </div>
 {% endblock %}

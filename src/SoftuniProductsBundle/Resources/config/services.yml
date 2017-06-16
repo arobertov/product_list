@@ -1,4 +1,7 @@
 services:
+    softuni_change_note.manager:
+        class: SoftuniProductsBundle\Services\SiteUpdateManager
+        arguments: ['@mailer']
     softuni_product.manager:
         class: SoftuniProductsBundle\Services\ProductManager
         arguments:
@@ -11,7 +14,7 @@ services:
         arguments:
              entityManager: "@doctrine.orm.entity_manager"
              class: 'SoftuniProductsBundle\Entity\ProductCategory'
-             container: "@service_container"
+             container: "@service_container"                                                    
 
     softuni_products.uploader:
         class: SoftuniProductsBundle\Services\FileUploader

@@ -11,6 +11,7 @@ namespace SoftuniProductsBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use SoftuniProductsBundle\Entity\Product;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductManager
 {
@@ -63,5 +64,4 @@ class ProductManager
     {
         return $this->class;
     }
-
 }

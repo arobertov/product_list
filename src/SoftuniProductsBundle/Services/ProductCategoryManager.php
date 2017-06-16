@@ -53,7 +53,7 @@ class ProductCategoryManager
 
     public function getProductCategoriesBy(array $criteria)
     {
-        return $this->repository->findBy($criteria);
+        return $this->repository->findBy([],$criteria);
     }
 
     /**
