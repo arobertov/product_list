@@ -53,7 +53,7 @@ class ProductManager
 
     public function getProductsBy(array $criteria)
     {
-        return $this->repository->findBy($criteria);
+        return $this->repository->findBy([],$criteria);
     }
 
     /**

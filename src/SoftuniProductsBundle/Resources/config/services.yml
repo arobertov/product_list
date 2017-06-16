@@ -27,6 +27,7 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
     app.doctrine_products_listener:
         class: SoftuniProductsBundle\EventListener\ImageUploadListener
         arguments: ['@softuni_products.uploader']

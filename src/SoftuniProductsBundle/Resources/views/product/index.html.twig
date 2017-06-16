@@ -1,25 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-    {% include '@SoftuniProducts/topnav.html.twig' %}
     <h1>Products list</h1>
     <ul>
         <li>
             <a href="{{ path('admin_product_new') }}">Create a new product</a>
         </li>
     </ul>
-    <article>
-    <ul div="article">
-        {% for product in products %}
-            <li><img src="{{asset('uploads/product/' ~  product.path) }}"></li>
-            <li><h2>Title: {{ product.title }}</h2></li>
-            <li><h3>Subtitle: {{ product.subtitle }}</h3></li>
-            <li><p>Slug: {{ product.slug }}</p></li>
-            <li><p>Description: {{ product.description }}</p></li>
-            <li><p>Prise: {{ product.price }} $</p></li>
-            <li><p>Date: {% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</p></li>
-        {% endfor %}
-    </ul>
-    </article>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-3">
+              <p class="lead">Most popular product</p>
+                  {{ render(controller(
+                  'SoftuniProductsBundle:Product:mostPopular'
+                  )) }}
+              </div>
+          <div class="col-md-9">
+              <div class="row">
+                {% for product in products %}
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <img src="{{asset('uploads/product/' ~  product.path) }}" alt="">
+                        <div class="caption">
+                            <h4 class="pull-right">${{ product.price }}</h4>
+                            <h4><a href="{{ path('admin_product_show',{'id':product.id}) }}">
+                                    Title :{{ product.title }}</a>
+                            </h4>
+                            <h4>Subtitle:{{ product.subtitle }}</h4>
+                            <p>Slug: {{ product.slug }} </p>
+                            <p>Description: {{ product.description }}</p>
+                        </div>
+                        <div class="ratings">
+                            <p class="pull-right">{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</p>
+                            <p>
+                                {% for i in 1.. product.rank %}
+                                     <span class="glyphicon glyphicon-star"></span> 
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+          </div>
+      </div>
+  </div>
 {% endblock %}

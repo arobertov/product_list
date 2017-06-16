@@ -19,7 +19,7 @@ class ProductCategoryType extends AbstractType
             ->add('slug')
             ->add('title')
             ->add('description')
-            ->add('path',FileType::class,array(
+            ->add('image',FileType::class,array(
                 'data_class'=>null,
                 'required'=>false
             ))

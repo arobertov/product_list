@@ -112,6 +112,7 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($_REQUEST);
             $this->get('softuni_products.uploader')->removeFile($product->getPath());
             $this->get('softuni_product.manager')->deleteProduct($product);
         }
@@ -131,7 +132,15 @@ class ProductController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_product_delete', array('id' => $product->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
+    }
+
+    public function mostPopularAction()
+    {
+        $criteria = ['rank'=>'DESC'];
+         $popularProducts = $this->get('softuni_product.manager')->getProductsBy($criteria);
+        return $this->render(
+            '@SoftuniProducts/product/popular_product.html.twig',['popularProducts'=>$popularProducts]
+        );
     }
 }

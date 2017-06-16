@@ -3,8 +3,10 @@
 namespace SoftuniProductsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use SoftuniProductsBundle\Entity\Product;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ProductCategory
@@ -47,9 +49,10 @@ class ProductCategory
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     *  
      */
-    private $path;
+    private $image;
 
     /**
      * @var int
@@ -267,7 +270,7 @@ class ProductCategory
     /**
      * Get products
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getProducts()
     {
@@ -278,20 +281,29 @@ class ProductCategory
     {
         return $this->title ;
     }
+    
 
     /**
-     * @return string
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return ProductCategory
      */
-    public function getPath()
+    public function setImage($image)
     {
-        return $this->path;
+        $this->image = $image;
+
+        return $this;
     }
 
     /**
-     * @param string $path
+     * Get image
+     *
+     * @return string
      */
-    public function setPath(string $path)
+    public function getImage()
     {
-        $this->path = $path;
+        return $this->image;
     }
 }

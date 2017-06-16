@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Productcategory controller.
  *
@@ -34,14 +35,16 @@ class ProductCategoryController extends Controller
      *
      * @Route("/new", name="admin_product-category_new")
      * @Method({"GET", "POST"})
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
-        $productCategory = $this->get('softuni_product_category.manager')->createProductCategory();
+        $productCategory = new ProductCategory();
         $form = $this->createForm('SoftuniProductsBundle\Form\ProductCategoryType', $productCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $em = $this->getDoctrine()->getManager();
             $productCategory->setCreatedAt(new \DateTime());
             $productCategory->setUpdatedAt(new \DateTime());
@@ -111,7 +114,7 @@ class ProductCategoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('softuni_products.uploader')->removeFile($productCategory->getPath());
+            $this->get('softuni_products.uploader')->removeFile($productCategory->getImage());
             $this->get('softuni_product_category.manager')->deleteProductCategory($productCategory);
         }
 

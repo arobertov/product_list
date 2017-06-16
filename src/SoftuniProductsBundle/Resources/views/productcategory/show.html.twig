@@ -1,57 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% include '@SoftuniProducts/topnav.html.twig' %}
-    <h1>Productcategory</h1>
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <img src="{{asset('uploads/product-category/' ~  productCategory.image) }}" alt="">
+                        <div class="caption">
+                            <h4><a href="{{ path('admin_product_show',{'id':productCategory.id}) }}">
+                                    Title :{{ productCategory.title }}</a>
+                            </h4>
+                            <p>Slug: {{ productCategory.slug }} </p>
+                            <p>Description: {{ productCategory.description }}</p>
+                        </div>
+                        <div class="ratings">
+                            <p class="pull-right">{% if productCategory.updatedAt %}{{ productCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</p>
+                            <p>
+                                {% for i in 1.. productCategory.rank %}
+                                    <span class="glyphicon glyphicon-star"></span>
+                                {% endfor %}
+                            </p>
+                            <p>
+                                <span>
+                                    <a href="{{ path('admin_product-category_index') }}"><<< Back to Products list</a>
+                                </span>
+                            </p>
+                            <p>
+                               <span>
+                                   <a class="btn btn-default" href="{{ path('admin_product-category_edit',{'id':productCategory.id}) }}">
+                                       Edit
+                                   </a>
+                               </span>
+                                <span>
+                                {{ form_start(delete_form) }}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    {{ form_end(delete_form) }}
+                            </span>
+                            </p>
+                        </div>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ productCategory.id }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ productCategory.slug }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ productCategory.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ productCategory.description }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td><img src="{{ asset('uploads/product-category/'~productCategory.path) }}"></td>
-            </tr>
-            <tr>
-                <th>Rank</th>
-                <td>{{ productCategory.rank }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if productCategory.createdAt %}{{ productCategory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{% if productCategory.updatedAt %}{{ productCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+                    </div>
+                </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('admin_product-category_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('admin_product-category_edit', { 'id': productCategory.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}

@@ -35,13 +35,17 @@ class ImageUploadListener
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
+        $entity = $args->getEntity();
+        if (!$entity instanceof Product) {
+            return;
+        }
         if($args->getNewValue('path')===null) {
           $args->setNewValue('path',$args->getOldValue('path'));
         }
         else {
             if($args->getOldValue('path')!==null)
             $this->uploader->removeFile($args->getOldValue('path'));
-            $entity = $args->getEntity();
+
             $this->uploadFile($entity);
         }
     }
@@ -63,16 +67,6 @@ class ImageUploadListener
         $entity->setPath($fileName);
     }
 
-    public function postLoad(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        if (!$entity instanceof Product) {
-            return;
-        }
-
-        if ($fileName = $entity->getPath()) {
-            $entity->setPath(new File($this->uploader->getTargetDir().'/'.$fileName));
-        }
-    }
+    
 
 }

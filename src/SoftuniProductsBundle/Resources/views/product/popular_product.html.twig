@@ -1,0 +1,9 @@
+<div class="list-group">
+    {% for popularProduct in popularProducts %}
+        <a href="#" class="list-group-item">
+                <img style="width: 70px" src="{{asset('uploads/product/' ~  popularProduct.path) }}" alt="">
+            <span style="padding-left: 20px">{{ popularProduct.title }}</span>
+        </a>
+
+     {% endfor %}
+</div>

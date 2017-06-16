@@ -2,66 +2,54 @@
 
 {% block body %}
 
-    {% include '@SoftuniProducts/topnav.html.twig' %}
 
-    <h1>Product</h1>
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <img src="{{asset('uploads/product/' ~  product.path) }}" alt="">
+                        <div class="caption">
+                            <h4 class="pull-right">${{ product.price }}</h4>
+                            <h4><a href="{{ path('admin_product_show',{'id':product.id}) }}">
+                                    Title :{{ product.title }}</a>
+                            </h4>
+                            <h4>Subtitle:{{ product.subtitle }}</h4>
+                            <p>Slug: {{ product.slug }} </p>
+                            <p>Description: {{ product.description }}</p>
+                        </div>
+                        <div class="ratings">
+                            <p class="pull-right">{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</p>
+                            <p>
+                                {% for i in 1.. product.rank %}
+                                    <span class="glyphicon glyphicon-star"></span>
+                                {% endfor %}
+                            </p>
+                            <p>
+                                <span>
+                                    <a href="{{ path('admin_product_index') }}"><<< Back to Products list</a>
+                                </span>
+                            </p>
+                            <p>
+                               <span>
+                                   <a class="btn btn-default" href="{{ path('admin_product_edit',{'id':product.id}) }}">
+                                       Edit
+                                   </a>
+                               </span>
+                                <span>
+                                {{ form_start(delete_form) }}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                {{ form_end(delete_form) }}
+                            </span>
+                            </p>
+                        </div>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ product.slug }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ product.title }}</td>
-            </tr>
-            <tr>
-                <th>Subtitle</th>
-                <td>{{ product.subtitle }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td><img src="{{asset('uploads/product/' ~  product.path) }}"></td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-            <tr>
-                <th>Rank</th>
-                <td>{{ product.rank }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if product.createdAt %}{{ product.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+                    </div>
+                </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('admin_product_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('admin_product_edit', { 'id': product.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            </div>
+
+        </div>
+    </div>
+
 {% endblock %}

@@ -1,49 +1,19 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-    {% include '@SoftuniProducts/topnav.html.twig' %}
-    <h1>Productcategories list</h1>
+    <h1>Categories list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Slug</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Rank</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for productCategory in productCategories %}
-            <tr>
-                <td><a href="{{ path('admin_product-category_show', { 'id': productCategory.id }) }}">{{ productCategory.id }}</a></td>
-                <td>{{ productCategory.slug }}</td>
-                <td>{{ productCategory.title }}</td>
-                <td>{{ productCategory.description }}</td>
-                <td><img src="{{ asset('uploads/product-category/' ~ productCategory.path) }}"></td>
-                <td>{{ productCategory.rank }}</td>
-                <td>{% if productCategory.createdAt %}{{ productCategory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if productCategory.updatedAt %}{{ productCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('admin_product-category_show', { 'id': productCategory.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('admin_product-category_edit', { 'id': productCategory.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+    <div class="col-md-4">
+        <p class="lead">Top rating !</p>
+        <div class="list-group">
+            {% for productCategory in productCategories %}
+                <a href="{{ path('admin_product-category_show', { 'id': productCategory.id }) }}" class="list-group-item">
+                    <img style="width: 130px" src="{{ asset('uploads/product-category/' ~ productCategory.image) }}">
+                <span style="font-size: 2rem;margin-left: 30px;font-weight: bold";>{{ productCategory.title }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    
     <ul>
         <li>
             <a href="{{ path('admin_product-category_new') }}">Create a new productCategory</a>

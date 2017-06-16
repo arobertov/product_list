@@ -35,12 +35,12 @@ class CategoryUploadListener
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
-        if($args->getNewValue('path')===null) {
-            $args->setNewValue('path',$args->getOldValue('path'));
+        if($args->getNewValue('image') === null) {
+            $args->setNewValue('image',$args->getOldValue('image'));
         }
         else {
-            if($args->getOldValue('path')!==null)
-                $this->uploader->removeFile($args->getOldValue('path'));
+            if($args->getOldValue('image')!==null)
+                $this->uploader->removeFile($args->getOldValue('image'));
             $entity = $args->getEntity();
             $this->uploadFile($entity);
         }
@@ -53,14 +53,14 @@ class CategoryUploadListener
             return;
         }
 
-        $file = $entity->getPath();
+        $file = $entity->getImage();
 
         // only upload new files
         if (!$file instanceof UploadedFile) {
             return;
         }
         $fileName = $this->uploader->upload($file);
-        $entity->setPath($fileName);
+        $entity->setImage($fileName);
     }
 
     public function postLoad(LifecycleEventArgs $args)
